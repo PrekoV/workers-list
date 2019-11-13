@@ -43,7 +43,6 @@ export default function Table() {
   const onEdit = (id, values) => {
     const currentValues = { ...values };
     const currentItems = [...items];
-    console.log(Object.prototype.hasOwnProperty.call(currentValues, 'name'));
 
     const currentItem = currentItems.find(item => item.id === id);
     if (currentItem) {

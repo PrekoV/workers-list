@@ -1,3 +1,5 @@
+/* eslint-disable arrow-body-style */
+/* eslint-disable no-unused-vars */
 import React, { useState } from 'react';
 import { Formik, Form, Field } from 'formik';
 
@@ -35,9 +37,11 @@ export default function Row({ item = {}, onDelete, onEdit, onSave }) {
                 <td className="rate">{isEdit ? <Field name="rate" type="text" /> : item.rate}</td>
                 <td className="action-buttons">
                   <button type="submit">{isEdit ? 'save' : 'edit'}</button>
-                  <button type="reset" onClick={() => onDelete(item.id)}>
-                    delete
-                  </button>
+                  {!isEdit && (
+                    <button type="reset" onClick={() => onDelete(item.id)}>
+                      delete
+                    </button>
+                  )}
                 </td>
               </tr>
             </Form>
