@@ -2,10 +2,10 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Set up
 
-Run "npm i"
-Run mongodb on port 27017
-Run server using "node server/"
-Run react app
+1) Run "npm i"<br />
+2) Run mongodb on port 27017<br />
+3) Run server using "node server/"<br />
+4) Run react app<br />
 
 ## Available Scripts
 
