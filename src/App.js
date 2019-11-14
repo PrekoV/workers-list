@@ -4,9 +4,13 @@ import './style/App.scss';
 import Table from './components/Table/Table';
 import Login from './components/Login';
 import Register from './components/Register';
+import Home from './components/Home';
 
-const PrivateRoute = ({ component: Component, isAuth, ...rest }) => (
-  <Route {...rest} render={props => (isAuth ? <Component {...props} /> : <Redirect to="/register" />)} />
+const PrivateRoute = ({ component: Component, ...rest }) => (
+  <Route
+    {...rest}
+    render={props => (localStorage.getItem('token') ? <Component {...props} /> : <Redirect to="/register" />)}
+  />
 );
 
 export default function App() {
@@ -16,7 +20,8 @@ export default function App() {
         <Switch>
           <Route path="/login" component={Login} />
           <Route path="/register" component={Register} />
-          <PrivateRoute path="/workers" component={Table} isAuth={!!localStorage.getItem('token')} />
+          <PrivateRoute path="/workers" component={Table} />
+          <Route path="/" component={Home} />
         </Switch>
       </Router>
     </div>

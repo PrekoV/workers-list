@@ -1,52 +1,39 @@
 /* eslint-disable no-underscore-dangle */
 import React, { useState, useEffect } from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 import Row from './Row';
-import API from '../../api';
+import actions from '../../store/actions/workers';
 
-export default function Table() {
-  const [items, setItems] = useState([]);
+function Table({ workers = [], ...props }) {
+  // const [items, setItems] = useState([]);
   const [isAddNew, setiIsAddNew] = useState(false);
 
   const toggleIsAddNew = () => setiIsAddNew(!isAddNew);
 
   const onDelete = id => {
-    API.delete(`/workers/${id}`).then(res => {
-      setItems([...items.filter(item => item._id !== id)]);
-    });
+    props.deleteWorker(id);
   };
 
   const onEdit = (id, values) => {
-    API.put(`/workers/${id}`, values).then(res => {
-      const currentItems = items.map(item => {
-        let current = { ...item };
-        if (current._id === id) {
-          current = { ...res.data };
-        }
-        return current;
-      });
-      setItems(currentItems);
-    });
+    props.editWorker({ ...values, id });
   };
 
   const onSave = values => {
-    const currentItems = [...items];
-
     toggleIsAddNew();
-    API.post('/workers', values).then(res => {
-      currentItems.push(res.data);
-      setItems(currentItems);
-    });
+    props.addWorker(values);
   };
 
   useEffect(() => {
-    API.get('/workers').then(res => setItems(res.data));
+    props.getWorkers();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
+  console.log(workers);
   return (
     <div className="table-wrapper">
       <div className="table">
-        {items.map(item => (
-          <Row item={item} onDelete={onDelete} onEdit={onEdit} />
+        {workers.map(item => (
+          <Row key={item._id} item={item} onDelete={onDelete} onEdit={onEdit} />
         ))}
       </div>
       {isAddNew ? (
@@ -61,3 +48,14 @@ export default function Table() {
     </div>
   );
 }
+
+const mapStateToProps = state => {
+  console.log(state);
+  return {
+    workers: state.workersReducer.workers,
+  };
+};
+
+const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(Table);

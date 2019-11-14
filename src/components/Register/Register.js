@@ -1,15 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 import LoginForm from '../LoginForm/LoginForm';
-import API from '../../api';
+import actions from '../../store/actions/user';
 
-export default function Register(props) {
+function Register(props) {
   const onSubmit = values => {
-    if (values) {
-      API.post('/register', values).then(res => {
-        props.history.replace('/workers');
-      });
-    }
+    if (!values) return;
+    props.register(values).then(() => props.history.replace('/workers'));
   };
   return (
     <div className="middle">
@@ -19,3 +18,5 @@ export default function Register(props) {
     </div>
   );
 }
+const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
+export default connect(null, mapDispatchToProps)(Register);

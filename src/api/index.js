@@ -25,6 +25,9 @@ API.interceptors.response.use(
     }
     return response;
   },
-  error => Promise.reject(error)
+  error => {
+    localStorage.clear();
+    return Promise.reject(error);
+  }
 );
 export default API;

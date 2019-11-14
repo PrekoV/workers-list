@@ -18,7 +18,7 @@ router.post('/login', (req, res, next) => {
     if (error || !user) {
       const err = new Error('Wrong email or password.');
       err.status = 401;
-      return res.send(err);
+      return next(err);
     }
     const token = jwt.sign({ id: user._id }, config.secret, { expiresIn: 86400 });
     res.status(200).send({ auth: true, token });
@@ -29,7 +29,7 @@ router.post('/register', (req, res, next) => {
   const userData = req.body;
   User.create(userData, (error, user) => {
     if (error) {
-      return res.send(error);
+      return next(error);
     }
     const token = jwt.sign({ id: user._id }, config.secret, { expiresIn: 86400 });
     res.status(200).send({ auth: true, token });

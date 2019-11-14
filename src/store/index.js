@@ -1,0 +1,9 @@
+/* eslint-disable import/prefer-default-export */
+/* eslint linebreak-style: ["error", "windows"] */
+
+import thunk from 'redux-thunk';
+import { createStore, applyMiddleware } from 'redux';
+import { composeWithDevTools } from 'redux-devtools-extension';
+import rootReducer from './reducers';
+
+export default createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk)));

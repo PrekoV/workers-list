@@ -14,11 +14,11 @@ router.get('/', (req, res, next) => {
 
   Worker.verify(token, error => {
     if (error) {
-      return res.send(error);
+      return next(error);
     }
     Worker.find({}, (err, workers) => {
       if (err) return res.status(404).send({ message: 'Something went wrong' });
-      res.send(workers);
+      next(workers);
     });
   });
 });
@@ -32,7 +32,7 @@ router.put('/:id', (req, res, next) => {
 
   Worker.verify(token, error => {
     if (error) {
-      return res.send(error);
+      return next(error);
     }
     Worker.findOneAndUpdate({ _id: id }, currentValues, { new: true }, (err, worker) => {
       if (err) return res.status(404).send({ message: 'User not found' });
@@ -49,7 +49,7 @@ router.post('/', (req, res, next) => {
   const worker = new Worker(newWorker);
   Worker.verify(token, error => {
     if (error) {
-      return res.send(error);
+      return next(error);
     }
     worker.save(err => {
       if (err) return res.status(404).send({ message: 'Something went wrong', err });

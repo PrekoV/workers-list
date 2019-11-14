@@ -17,29 +17,22 @@ const workerScheme = new Schema(
     contact: {
       type: String,
       required: true,
-      trim: true,
-      unique: false,
     },
     sex: {
       type: String,
-      unique: false,
       required: true,
     },
     dateAdd: {
       type: Date,
       required: true,
-      unique: false,
     },
     rate: {
       type: Number,
       required: true,
-      unique: false,
     },
     position: {
       type: String,
       required: true,
-      unique: false,
-      trim: true,
     },
   },
   { versionKey: false }

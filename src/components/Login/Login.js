@@ -1,10 +1,13 @@
 import React from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 import LoginForm from '../LoginForm/LoginForm';
-import API from '../../api';
+import actions from '../../store/actions/user';
 
-export default function Login(props) {
+function Login(props) {
   const onSubmit = values => {
-    API.post('/login', values).then(res => props.history.replace('/workers'));
+    if (!values) return;
+    props.login(values).then(() => props.history.replace('/workers'));
   };
   return (
     <div className="middle">
@@ -13,3 +16,7 @@ export default function Login(props) {
     </div>
   );
 }
+
+const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
+
+export default connect(null, mapDispatchToProps)(Login);
