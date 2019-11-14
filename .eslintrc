@@ -10,6 +10,16 @@
     "no-debugger": 2,
     "no-alert": 2,
     "no-console": 2,
+    "jsx-a11y/label-has-associated-control": [ "error", {
+      "required": {
+        "some": [ "nesting", "id"  ]
+      }
+    }],
+    "jsx-a11y/label-has-for": [ "error", {
+      "required": {
+        "some": [ "nesting", "id"  ]
+      }
+    }],
     "no-return-assign": [
       "error"
     ],

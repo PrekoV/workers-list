@@ -1,4 +1,5 @@
 /* eslint linebreak-style: ["error", "windows"] */
+/* eslint linebreak-style: ["error", "unix"] */
 
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -28,5 +29,5 @@ mongoose.connect('mongodb://localhost:27017/workertest', { useNewUrlParser: true
   });
 });
 
-app.use('/workers', workers);
-app.use('/', user);
+app.use('/api/workers', workers);
+app.use('/api/', user);

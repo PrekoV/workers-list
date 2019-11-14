@@ -1,0 +1,113 @@
+.App {
+    &>* {
+        box-sizing: border-box;
+    }
+}
+
+.table {
+    width: 90%;
+    margin: 20px auto;
+    border: 4px double black;
+    min-width: fit-content;
+
+
+
+}
+
+button {
+    text-transform: uppercase;
+    color: #fff;
+    padding: 10px;
+    outline: none;
+    border: none;
+    display: block;
+    cursor: pointer;
+}
+
+.add-button {
+    margin: 20px auto;
+    width: 100px;
+    background-color: #4CAF50;
+}
+
+.row {
+    display: flex;
+    width: 100%;
+    min-width: fit-content;
+
+    &>.column {
+        border-bottom: 1px dashed black;
+        border-right: 1px dashed black;
+        width: 100%;
+        padding: 10px;
+        min-width: 110px;
+
+        &:last-child {
+            border-right: none;
+            display: flex;
+            justify-content: space-around;
+        }
+
+        &>button {
+            background-color: #61affe;
+        }
+
+
+
+
+    }
+
+    .label {
+        font-size: 12px;
+        color: #61affe;
+    }
+
+    &:last-child {
+        .column {
+            border-bottom: none;
+        }
+    }
+}
+
+.error {
+    color: red;
+    font-size: 10px;
+}
+
+.disabled {
+    pointer-events: none;
+    opacity: 0.5;
+}
+
+input {
+    width: 100%;
+    border: none;
+    border-bottom: 2px solid #61affe;
+}
+
+.middle {
+    width: 35%;
+    margin: 0 auto;
+
+    .login-form {
+        width: 100%;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+
+        input {
+            margin: 10px 0;
+            padding: 5px 0;
+
+        }
+        button{
+            margin: 0 auto;
+            background-color: #61affe;
+        }
+    }
+}
+
+label {
+    font-size: 12px;
+    color: #61affe;
+}

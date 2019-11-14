@@ -2,6 +2,7 @@
 /* eslint-disable consistent-return */
 /* eslint-disable no-console */
 /* eslint linebreak-style: ["error", "windows"] */
+/* eslint linebreak-style: ["error", "unix"] */
 
 const express = require('express');
 const jwt = require('jsonwebtoken');
@@ -20,7 +21,7 @@ router.post('/login', (req, res, next) => {
       return res.send(err);
     }
     const token = jwt.sign({ id: user._id }, config.secret, { expiresIn: 86400 });
-    res.status(200).send({ ...user, auth: true, token });
+    res.status(200).send({ auth: true, token });
   });
 });
 

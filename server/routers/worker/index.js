@@ -1,6 +1,8 @@
 /* eslint-disable consistent-return */
 /* eslint-disable no-console */
 /* eslint linebreak-style: ["error", "windows"] */
+/* eslint linebreak-style: ["error", "unix"] */
+
 const express = require('express');
 
 const router = express.Router();
@@ -44,14 +46,13 @@ router.post('/', (req, res, next) => {
   const token = req.headers.authorization;
 
   if (!newWorker) return res.sendStatus(400);
-
   const worker = new Worker(newWorker);
   Worker.verify(token, error => {
     if (error) {
       return res.send(error);
     }
     worker.save(err => {
-      if (err) return res.status(404).send({ message: 'Something went wrong' });
+      if (err) return res.status(404).send({ message: 'Something went wrong', err });
       res.send(worker);
     });
   });

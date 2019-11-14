@@ -1,6 +1,7 @@
 /* eslint-disable func-names */
 /* eslint-disable consistent-return */
 /* eslint linebreak-style: ["error", "windows"] */
+/* eslint linebreak-style: ["error", "unix"] */
 const mongoose = require('mongoose');
 const bcrypts = require('bcrypt');
 
@@ -37,13 +38,14 @@ userScheme.statics.authenticate = (email, password, callback) => {
   User.findOne({ email }).exec((err, user) => {
     if (err) {
       return callback(err);
-    } else if (!user) {
+    }
+    if (!user) {
       const newErr = new Error('User not found.');
       newErr.status = 401;
       return callback(newErr);
     }
     bcrypts.compare(password, user.password, (_err, result) => {
-      if (result === true) {
+      if (result) {
         return callback(null, user);
       }
       return callback();
