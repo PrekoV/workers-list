@@ -1,17 +1,18 @@
 /* eslint-disable import/prefer-default-export */
 /* eslint linebreak-style: ["error", "windows"] */
-
+/* eslint linebreak-style: ["error", "unix"] */
 import { LOGIN_SUCCESS, LOGIN_FAILURE, LOGOUT_SUCCESS, REGISTER_SUCCESS, REGISTER_FAILURE } from './types';
 import API from '../../api';
 
 const loginSuccess = () => ({
   type: LOGIN_SUCCESS,
-  auth: false,
+  auth: true,
 });
 
-const loginFailure = () => ({
+const loginFailure = message => ({
   type: LOGIN_FAILURE,
-  auth: true,
+  auth: false,
+  message,
 });
 
 const logoutSuccess = () => ({
@@ -24,9 +25,10 @@ const registerSuccess = () => ({
   auth: true,
 });
 
-const registerFailure = () => ({
+const registerFailure = message => ({
   type: REGISTER_FAILURE,
   auth: false,
+  message,
 });
 
 export const login = data => dispatch => {
@@ -34,9 +36,10 @@ export const login = data => dispatch => {
   return API.post('/login', data)
     .then(
       () => dispatch(loginSuccess()),
-      () => dispatch(loginFailure())
+      rej => dispatch(loginFailure(rej.response.data.message))
     )
     .catch(e => {
+      dispatch(loginFailure('Something went wrong'));
       throw e;
     });
 };
@@ -50,9 +53,10 @@ export const register = data => dispatch => {
   return API.post('register', data)
     .then(
       () => dispatch(registerSuccess()),
-      () => dispatch(registerFailure())
+      rej => dispatch(registerFailure(rej.response.data.message))
     )
     .catch(e => {
+      dispatch(loginFailure('Something went wrong'));
       throw e;
     });
 };

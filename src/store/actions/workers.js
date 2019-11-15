@@ -11,14 +11,16 @@ import API from '../../api';
 
 /* eslint-disable import/prefer-default-export */
 /* eslint linebreak-style: ["error", "windows"] */
+/* eslint linebreak-style: ["error", "unix"] */
 
 const getWorkersSuccess = workers => ({
   type: GET_WORKERS_SUCCESS,
   workers,
 });
 
-const getWorkersFailure = () => ({
+const getWorkersFailure = message => ({
   type: GET_WORKERS_SUCCESS,
+  message,
 });
 
 const addWorkerSuccess = worker => ({
@@ -26,8 +28,9 @@ const addWorkerSuccess = worker => ({
   worker,
 });
 
-const addWorkerFailure = () => ({
+const addWorkerFailure = message => ({
   type: ADD_WORKER_FAILURE,
+  message,
 });
 
 const editWorkerSuccess = worker => ({
@@ -35,8 +38,9 @@ const editWorkerSuccess = worker => ({
   worker,
 });
 
-const editWorkerFailure = () => ({
+const editWorkerFailure = message => ({
   type: EDIT_WORKER_FAILURE,
+  message,
 });
 
 const deleteWorkerSuccess = workerId => ({
@@ -44,18 +48,19 @@ const deleteWorkerSuccess = workerId => ({
   workerId,
 });
 
-const deleteWorkerFailure = () => ({
+const deleteWorkerFailure = message => ({
   type: DELETE_WORKER_FAILURE,
+  message,
 });
 
 export const getWorkers = () => dispatch =>
   API.get('/workers')
     .then(
       res => dispatch(getWorkersSuccess(res.data)),
-      () => dispatch(getWorkersFailure())
+      rej => dispatch(getWorkersFailure(rej.message))
     )
     .catch(e => {
-      dispatch(getWorkersFailure());
+      dispatch(getWorkersFailure('Something went wrong'));
       throw e;
     });
 
@@ -63,10 +68,10 @@ export const addWorker = data => dispatch =>
   API.post('/workers', data)
     .then(
       res => dispatch(addWorkerSuccess(res.data)),
-      () => dispatch(addWorkerFailure())
+      rej => dispatch(addWorkerFailure(rej.response.data.message))
     )
     .catch(e => {
-      dispatch(addWorkerFailure());
+      dispatch(addWorkerFailure('Something went wrong'));
       throw e;
     });
 
@@ -74,10 +79,10 @@ export const editWorker = data => dispatch =>
   API.put(`/workers/${data.id}`, data)
     .then(
       res => dispatch(editWorkerSuccess(res.data)),
-      () => dispatch(editWorkerFailure())
+      rej => dispatch(editWorkerFailure(rej.response.data.message))
     )
     .catch(e => {
-      dispatch(editWorkerFailure());
+      dispatch(editWorkerFailure('Something went wrong'));
       throw e;
     });
 
@@ -85,10 +90,10 @@ export const deleteWorker = id => dispatch =>
   API.delete(`/workers/${id}`)
     .then(
       () => dispatch(deleteWorkerSuccess(id)),
-      () => dispatch(deleteWorkerFailure())
+      rej => dispatch(deleteWorkerFailure(rej.response.data.message))
     )
     .catch(e => {
-      dispatch(deleteWorkerFailure());
+      dispatch(deleteWorkerFailure('Something went wrong'));
       throw e;
     });
 

@@ -65,6 +65,12 @@ button {
 .error {
     color: red;
     font-size: 10px;
+    &.big{
+        font-size: 20px;
+        display: block;
+        margin: 0 auto;
+        width: fit-content;
+    }
 }
 
 .disabled {

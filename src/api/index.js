@@ -26,7 +26,7 @@ API.interceptors.response.use(
     return response;
   },
   error => {
-    localStorage.clear();
+    error.response.status === 500 && localStorage.clear();
     return Promise.reject(error);
   }
 );

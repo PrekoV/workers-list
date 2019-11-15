@@ -13,10 +13,14 @@ function Register(props) {
   return (
     <div className="middle">
       <h2>Register</h2>
+      <div className="error">{props.message}</div>
       <LoginForm onSubmit={onSubmit} />
       <Link to="/login">Already have account?</Link>
     </div>
   );
 }
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
-export default connect(null, mapDispatchToProps)(Register);
+const mapStateToProps = state => ({
+  message: state.userReducer.message,
+});
+export default connect(mapStateToProps, mapDispatchToProps)(Register);

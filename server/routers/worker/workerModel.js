@@ -47,7 +47,7 @@ workerScheme.statics.verify = (token, callback) => {
   }
   jwt.verify(token, config.secret, err => {
     if (err) {
-      const newErr = new Error('Failed to authenticate token');
+      const newErr = { message: 'Failed to authenticate token' };
       newErr.status = 500;
       return callback(newErr);
     }

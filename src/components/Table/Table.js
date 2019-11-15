@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import Row from './Row';
 import actions from '../../store/actions/workers';
 
-function Table({ workers = [], ...props }) {
+function Table({ workers = [], message, ...props }) {
   // const [items, setItems] = useState([]);
   const [isAddNew, setiIsAddNew] = useState(false);
 
@@ -28,7 +28,7 @@ function Table({ workers = [], ...props }) {
     props.getWorkers();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  console.log(workers);
+
   return (
     <div className="table-wrapper">
       <div className="table">
@@ -45,16 +45,15 @@ function Table({ workers = [], ...props }) {
           add
         </button>
       )}
+      <div className="error big">{message}</div>
     </div>
   );
 }
 
-const mapStateToProps = state => {
-  console.log(state);
-  return {
-    workers: state.workersReducer.workers,
-  };
-};
+const mapStateToProps = state => ({
+  workers: state.workersReducer.workers,
+  message: state.workersReducer.message,
+});
 
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
 
